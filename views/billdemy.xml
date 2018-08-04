@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <data>
+    <record model="ir.actions.act_window" id="course_list_action">
+        <field name="name">Courses</field>
+        <field name="res_model">billdemy.course</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">Create the first course</p>
+        </field>  
+    </record>
+
+    <!-- form view -->
+    <record model="ir.ui.view" id="course_form_view">
+        <field name="name">courses.form</field>
+        <field name="model">billdemy.course</field>
+        <field name="arch" type="xml">
+            <form string="Course Form">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="custom_id"/>
+                        <field name="responsible_id"/>
+                    </group>
+                    <!-- Notebooks -->
+                    <notebook>
+                        <page string="Description">
+                            <field name="description"/>
+                        </page>
+                        <page string="About">
+                            This is an awesome notebook.
+                        </page>
+                        <page string="Sessions">
+                            <field name="session_ids">
+                                <tree string="Registered sessions">
+                                    <field name="name"/>
+                                    <field name="instructor_id"/>
+                                </tree>
+                            </field>    
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- override the automatically generated list view for course -->
+    <record model="ir.ui.view" id="course_tree_view">
+        <field name="name">course.tree</field>
+        <field name="model">billdemy.course</field>
+        <field name="arch" type="xml">
+            <tree string="Course Tree">
+                <field name="name"/>
+                <field name="responsible_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Search views -->
+    <record model="ir.ui.view" id="course_search_view">
+        <field name="name">course.search</field>
+        <field name="model">billdemy.course</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="description"/>
+            </search>
+        </field>
+    </record>
+
+    <!-- Session form view -->
+    <record model="ir.ui.view" id="session_form_view">
+        <field name="name">session.form</field>
+        <field name="model">billdemy.session</field>
+        <field name="arch" type="xml">
+            <form string="Session Form">
+                <sheet>
+                    <group>
+                        <group string="General">
+                            <field name="course_id"/>
+                            <field name="name"/>
+                            <field name="instructor_id"/>
+                        </group>
+                        <group>
+                            <field name="start_date"/>
+                            <field name="duration"/>
+                            <field name="seats"/>
+                        </group>
+                        <label for="attendee_ids"/>
+                        <field name="attendee_ids"/>
+                    </group> 
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Session tree/list view -->
+    <record model="ir.ui.view" id="session_tree_view">
+        <field name="name">session.tree</field>
+        <field name="model">billdemy.session</field>
+        <field name="arch" type="xml">
+            <tree string="Session Tree">
+                <field name="name"/>
+                <field name="course_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="session_list_action">
+        <field name="name">Sessions</field>
+        <field name="res_model">billdemy.session</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- top level menu: no parent -->
+    <menuitem id="main_billdemy_menu" name="Bill Academy"/>
+    <!-- A first level in the left side menu is needed
+         before using action= attribute -->
+    <menuitem id="billdemy_menu" name="Bill Academy"
+              parent="main_billdemy_menu"/>
+    <!-- the following menuitem should appear *after*
+        its parent Billdemy_menu and *after* its 
+        action course_list_action -->
+    <menuitem id="courses_menu" name="Courses" parent="billdemy_menu"
+              action="course_list_action"/>
+
+    <menuitem id="session_menu" name="Sessions"
+                parent="billdemy_menu"
+                action="session_list_action"/>
+
+    <!-- <menuitem id="courses_menu" name="Courses" parent="billdemy_menu"
+              action="course_list_action"/> -->
+  </data>
+</odoo>
