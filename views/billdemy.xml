@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
-  <data>
+  
     <record model="ir.actions.act_window" id="course_list_action">
         <field name="name">Courses</field>
         <field name="res_model">billdemy.course</field>
@@ -222,7 +222,33 @@
                 parent="billdemy_menu"
                 action="session_list_action"/>
 
+    <record model="ir.ui.view" id="wizard_form_view">
+        <field name="name">wizard.form</field>
+        <field name="model">billdemy.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Add Attendees">
+                <group>
+                    <field name="session_ids"/>
+                    <field name="attendee_ids"/>
+                </group>
+                <footer>
+                    <button name="subscribe" type="object"
+                        string="Subscribe" class="oe_highlight"/>
+                    or
+                    <button special="cancel" string="Cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <act_window id="launch_session_wizard"
+                name="Add Attendees"
+                src_model="billdemy.session"
+                res_model="billdemy.wizard"
+                view_mode="form"
+                target="new"
+                key2="client_action_multi"/>
     <!-- <menuitem id="courses_menu" name="Courses" parent="billdemy_menu"
               action="course_list_action"/> -->
-  </data>
+  
 </odoo>
