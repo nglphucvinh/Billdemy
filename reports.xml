@@ -1,25 +1,26 @@
 <odoo>
+
     <report
-        id="report_sesion"
+        id="report_session"
         model="billdemy.session"
-        string="Sesion Report"
-        name="billdemy.report_sesion_view"
-        file="billdemy.report_session"
+        string="Session Report"
+        name="open_a.report_session_view"
+        file="open_a.report_session"
         report_type="qweb-pdf" />
 
     <template id="report_session_view">
-        <t t-call="web.html_containter">
+        <t t-call="web.html_container">
             <t t-foreach="docs" t-as="doc">
                 <t t-call="web.external_layout">
                     <div class="page">
-                        <h2 t-field="doc.name" />
+                        <h2 t-field="doc.name"/>
                         <p>From <span t-field="doc.start_date"/> to <span t-field="doc.end_date"/></p>
                         <h3>Attendees:</h3>
-                        <u1>
+                        <ul>
                             <t t-foreach="doc.attendee_ids" t-as="attendee">
                                 <li><span t-field="attendee.name"/></li>
                             </t>
-                        </u1>
+                        </ul>
                     </div>
                 </t>
             </t>
@@ -27,3 +28,4 @@
     </template>
 
 </odoo>
+
